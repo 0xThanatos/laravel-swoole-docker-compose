@@ -26,6 +26,7 @@ RUN apt-get update && \
     pdo_pgsql
 
 # Migrate & Start Swoole server
+WORKDIR "/app"
 RUN cd laravel-swoole-tutorial \
     php artisan migrate --force \
     php artisan swoole:http start
