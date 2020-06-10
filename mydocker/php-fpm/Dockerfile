@@ -24,3 +24,8 @@ RUN apt-get update && \
     docker-php-ext-install \
     pdo \
     pdo_pgsql
+
+# Migrate & Start Swoole server
+RUN cd laravel-swoole-tutorial \
+    php artisan migrate --force \
+    php artisan swoole:http start
