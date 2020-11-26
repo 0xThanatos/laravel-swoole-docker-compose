@@ -20,7 +20,7 @@ services:
       - ./mydocker/nginx/conf/nginx.conf:/etc/nginx/conf/nginx.conf:ro
       - ./mydocker/nginx/conf.d:/etc/nginx/conf.d:ro
     ports:
-      - "80:80"
+      - "80:80" # HTTP
 
   php-fpm:
     build: mydocker/php-fpm
@@ -32,6 +32,6 @@ services:
       - ./mydocker/php-fpm/php-ini-overrides.ini:/etc/php/7.4/fpm/conf.d/99-overrides.ini
     ports:
       - "1215:1215" # Swoole port
-      - "9000:9000" # PHP-FPM port
+      # - "9000:9000" # PHP-FPM port
     # When the container starts up, it will run Swoole immediately.
-    # command: bash -c "php artisan swoole:http start" # Uncomment this if your use Swoole.
+    command: bash -c "php artisan swoole:http start" # Uncomment this if your use Swoole.
