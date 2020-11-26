@@ -1,3 +1,4 @@
 app/
 .env
 .DS_Store
+.vscode
