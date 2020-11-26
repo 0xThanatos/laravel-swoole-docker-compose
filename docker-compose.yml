@@ -1,31 +1,37 @@
 version: "3.1"
 services:
+  postgres:
+    image: postgres:alpine
+    container_name: laravel-postgres
+    working_dir: /app
+    volumes:
+      - ./app:/app
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB}
 
-    postgres:
-      image: postgres:alpine
-      container_name: postgres
-      working_dir: /app
-      volumes:
-        - ./app:/app
-      environment:
-        - POSTGRES_USER=${POSTGRES_USER}
-        - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
-        - POSTGRES_DB=${POSTGRES_DB}
+  nginx:
+    image: nginx:alpine
+    container_name: laravel-nginx
+    working_dir: /app
+    volumes:
+      - ./app:/app
+      - ./mydocker/nginx/conf/nginx.conf:/etc/nginx/conf/nginx.conf:ro
+      - ./mydocker/nginx/conf.d:/etc/nginx/conf.d:ro
+    ports:
+      - "80:80"
 
-    nginx:
-      image: nginx:alpine
-      container_name: nginx
-      working_dir: /app
-      volumes:
-          - ./app:/app
-          - ./mydocker/nginx/nginx.conf:/etc/nginx/conf.d/default.conf
-      ports:
-        - "80:80"
-
-    php-fpm:
-      build: mydocker/php-fpm
-      container_name: php-fpm
-      working_dir: /app
-      volumes:
-        - ./app:/app
-        - ./mydocker/php-fpm/php-ini-overrides.ini:/etc/php/7.4/fpm/conf.d/99-overrides.ini
+  php-fpm:
+    build: mydocker/php-fpm
+    container_name: laravel-php-fpm
+    working_dir: /app
+    volumes:
+      # Change directory name to your project name. Example "./app/YOUR_DIRECTORY_NAME:/app"
+      - ./app/laravel-swoole-tutorial:/app
+      - ./mydocker/php-fpm/php-ini-overrides.ini:/etc/php/7.4/fpm/conf.d/99-overrides.ini
+    ports:
+      - "1215:1215" # Swoole port
+      - "9000:9000" # PHP-FPM port
+    # When the container starts up, it will run Swoole immediately.
+    # command: bash -c "php artisan swoole:http start" # Uncomment this if your use Swoole.
