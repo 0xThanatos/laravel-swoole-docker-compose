@@ -1,6 +1,6 @@
 ## Laravel 8 + PHP Swoole with Docker Compose
 
-Medium article: https://bit.ly/laravel-swoole-docker-tutorial
+Laravel + PHP Swoole in Supervisor
 
 ## YAML
 
