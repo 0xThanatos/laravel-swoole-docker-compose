@@ -1,12 +1,11 @@
-## Laravel + Swoole documentation (Thai language)
+## Laravel 8 + PHP Swoole with Docker Compose
 
 Medium article: https://bit.ly/laravel-swoole-docker-tutorial
 
 ## YAML
 
 - NGINX (latest)
-- PHP-FPM (7.4.6)
-- PostgreSQL (latest)
+- PHP-FPM (7.4)
 
 ## Usage
 
